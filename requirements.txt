@@ -1,0 +1,14 @@
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+scikit-learn>=1.2.0
+torch>=2.0.0
+matplotlib>=3.7.0
+pyyaml>=6.0
+joblib>=1.2.0
+pytest>=7.0.0
+tqdm>=4.65.0
+qiskit==1.0.2
+qiskit-aer==0.13.3
+qiskit-machine-learning>=0.7.0
+adversarial-robustness-toolbox>=1.16.0

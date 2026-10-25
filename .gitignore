@@ -1,0 +1,103 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+.venv-repro/
+.gpu_packages/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (download separately)
+data/raw/*.txt
+data/raw/*.txt.gz
+data/raw/*.csv
+data/raw/*.tsv
+
+# Results cache (large binary files)
+results/cache/*.npy
+results/cache/*.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Installed packages and local environments (keep requirements*.txt)
+.venv*/
+venv*/
+myvenv/
+.gpu_packages/
+.figure_dependencies/
+site-packages/
+node_modules/
+*.dist-info/
+*.pyd
+*.dll
+*.whl
+
+# Test and tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage*
+htmlcov/
+
+# Local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Assistant settings, instructions, and session artifacts
+.codex/
+.agents/
+.claude/
+.cursor/
+.aider*
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.github/copilot-instructions.md
+*AI_AGENT_GUIDE*
+*KICKOFF_PROMPT*
+/LOG.md
+/docs/01_RESEARCH_PLAN.md
+/docs/PHASE5_RESUME_AUDIT.md
+
+# Local experiments, snapshots, manuscript working files and exports
+/results/
+/scratch/
+/manuscript/
+/data/raw/
+/scripts/audit_manuscript.py
+/scripts/build_manuscript_docx.py
+/scripts/build_research_draft.py
+/scripts/finalize_submission_text.py
+/scripts/final_paper.py
+/scripts/package_publication.py
+/scripts/render_docx_with_word.ps1
+/scripts/resume_manuscript.py
+/scripts/revise_publication.py
+/scripts/revise_publication_paper.py

@@ -1,0 +1,37 @@
+experiment: iso_overlap_followup
+description: Post-review Phase 6 supplement selected only by training concentration
+  overlap
+datasets:
+- wbcd
+- gse2034
+seeds:
+- 0
+- 1
+- 2
+n_qubits: 5
+reps:
+- 1
+- 2
+- 3
+noise_p:
+- 0.0
+bandwidth:
+- 4.0
+- 6.0
+train_size: 60
+test_size: 60
+attacks:
+- A0
+- A1
+- A2
+eps_rel:
+- 0.05
+- 0.1
+- 0.2
+- 0.4
+pgd_T: 40
+pgd_R: 3
+eps_large_rel: 5.0
+n_jobs: 12
+results_file: iso_overlap_followup_results.csv
+omics_select_k: 1000

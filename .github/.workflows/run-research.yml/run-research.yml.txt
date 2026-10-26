@@ -1,0 +1,89 @@
+
+name: QSVM Research Experiment
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_mode:
+        description: "Choose which experiment to run"
+        required: true
+        default: smoke
+        type: choice
+        options:
+          - smoke
+          - main
+
+permissions:
+  contents: read
+
+jobs:
+  run-experiment:
+    runs-on: windows-latest
+    timeout-minutes: 300
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: requirements-repro-lock.txt
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-repro-lock.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Prepare data directory
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force data/raw | Out-Null
+
+      - name: Download GSE2034 for main experiment
+        if: inputs.run_mode == 'main'
+        shell: pwsh
+        run: |
+          $url = "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE2nnn/GSE2034/matrix/GSE2034_series_matrix.txt.gz"
+          Invoke-WebRequest -Uri $url -OutFile "data/raw/GSE2034_series_matrix.txt.gz"
+          if (!(Test-Path "data/raw/GSE2034_series_matrix.txt.gz")) {
+            throw "GSE2034 download failed"
+          }
+
+      - name: Run unit tests
+        shell: pwsh
+        run: |
+          if ("${{ inputs.run_mode }}" -eq "main") {
+            python -m pytest tests -q
+          } else {
+            python -m pytest tests -q -k "not test_gse2034_loader"
+          }
+
+      - name: Run smoke test
+        if: inputs.run_mode == 'smoke'
+        shell: pwsh
+        run: |
+          python scripts/run_experiment.py --config configs/smoke_test.yaml
+
+      - name: Run main experiment
+        if: inputs.run_mode == 'main'
+        shell: pwsh
+        run: |
+          if (Test-Path "configs/tier_a_single.yaml") {
+            python scripts/run_experiment.py --config configs/tier_a_single.yaml
+          } else {
+            python scripts/run_experiment.py --config configs/tier_a_main.yaml
+          }
+
+      - name: Upload experiment results and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qsvm-experiment-results
+          path: |
+            results/
+          if-no-files-found: warn
+          retention-days: 14

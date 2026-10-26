@@ -32,6 +32,6 @@ pgd_R: 3
 eps_large_rel: 5.0
 
 # Joblib parallelism — use -1 for all cores, or a fixed number
-n_jobs: 12
+n_jobs: 1
 results_file: tier_a_results.csv
 omics_select_k: 1000
